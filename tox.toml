@@ -1,12 +1,26 @@
-
 [tox]
-env_list = ["py312"]
+env_list = ["unit", "integration", "report"]
 skipsdist = true
 
 [testenv]
 deps = ["-rrequirements.txt"]
-commands = [
-	"coverage run -m pytest",
-	"coverage report",
-]
 
+["testenv:unit"]
+commands = [
+    ["coverage", "run", "-a", "-m", "unittest", "discover", "tests/unit"]
+]
+set_env = { PYTHONPATH = "{toxinidir}" }
+
+["testenv:integration"]
+commands = [
+    ["coverage", "run", "-a", "-m", "pytest", "tests/integration"]
+]
+set_env = { PYTHONPATH = "{toxinidir}" }
+
+["testenv:report"]
+deps = ["coverage"]
+skip_install = true
+commands = [
+    ["coverage", "report"],
+    ["coverage", "html"]
+]
