@@ -1,0 +1,12 @@
+
+[tox]
+env_list = ["py312"]
+skipsdist = true
+
+[testenv]
+deps = ["-rrequirements.txt"]
+commands = [
+	"coverage run -m pytest",
+	"coverage report",
+]
+
